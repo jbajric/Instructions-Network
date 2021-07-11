@@ -1,0 +1,208 @@
+version: '3'
+services:
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: rabbitmq
+    expose:
+      - 5672
+      - 15672
+    ports:
+      - 5672:5672
+      - 15672:15672
+    networks:
+      - instructionnetwork
+
+  eureka:
+    image: docker-eureka
+    container_name: eureka
+    build:
+      context: ./serverdiscovery
+    expose:
+      - 8761
+    ports:
+      - 8761:8761
+    networks:
+      - instructionnetwork
+    deploy:
+      restart_policy:
+        condition: on-failure
+        max_attempts: 5
+
+  serverconfig:
+    image: docker-serverconfig
+    container_name: serverconfig
+    build:
+      context: ./serverconfig
+    ports:
+      - 8888:8888
+    networks:
+      - instructionnetwork
+    depends_on:
+      - eureka
+    environment:
+      - CONFIG_REPO_USERNAME=jbajric
+      - CONFIG_REPO_PASSWORD=hWmZq4t7w!z%C&F)J@NcRfUjXn2r5u8x/A?D(G-KaPdSgVkYp3s6v9y$B&E)H@MbQeThWmZq4t7w!z%C*F-JaNdRfUjXn2r5u8x/A?D(G+KbPeShVkYp3s6v9y$B&E)H
+      - CONFIG_REPO_URI=https://github.com/jbajric/serverconfig
+    deploy:
+      restart_policy:
+        condition: on-failure
+        max_attempts: 5
+
+  systemevents:
+    image: docker-systemevents
+    container_name: systemevents
+    build:
+      context: ./system-events
+    networks:
+      - instructionnetwork
+    environment:
+      - JAVA_OPTS=
+        - EUREKA_SERVER=http://eureka:8761/eureka
+      - CONFIG_SERVER_URI=optional:serverconfig:http://serverconfig:8888
+    depends_on:
+      - serverconfig
+    expose:
+      - 9090
+    ports:
+      - 9090:9090
+    deploy:
+      restart_policy:
+        condition: on-failure
+        max_attempts: 5
+
+  korisnik:
+    image: docker-korisnik
+    container_name: korisnik
+    build:
+      context: ./korisnik
+    networks:
+      - instructionnetwork
+    environment:
+      - JAVA_OPTS=
+        - EUREKA_SERVER=http://eureka:8761/eureka
+      - CONFIG_SERVER_URI=optional:serverconfig:http://serverconfig:8888
+    depends_on:
+      - eureka
+    ports:
+      - 8081:8081
+      - 9091:9091
+    deploy:
+      restart_policy:
+        condition: on-failure
+        max_attempts: 5
+
+  raspored:
+    image: docker-raspored
+    container_name: raspored
+    build:
+      context: ./raspored
+    networks:
+      - instructionnetwork
+    environment:
+      - JAVA_OPTS=
+        - EUREKA_SERVER=http://eureka:8761/eureka
+      - CONFIG_SERVER_URI=optional:serverconfig:http://serverconfig:8888
+    depends_on:
+      - eureka
+      - korisnik
+      - systemevents
+    ports:
+      - 8082:8082
+      - 9092:9092
+    deploy:
+      restart_policy:
+        condition: on-failure
+        max_attempts: 5
+
+  termini:
+    image: docker-termini
+    container_name: termini
+    build:
+      context: ./termini
+    networks:
+      - instructionnetwork
+    environment:
+      - JAVA_OPTS=
+        - EUREKA_SERVER=http://eureka:8761/eureka
+      - CONFIG_SERVER_URI=optional:serverconfig:http://serverconfig:8888
+    depends_on:
+      - eureka
+      - korisnik
+      - systemevents
+      - rabbitmq
+    ports:
+      - 8083:8083
+      - 9093:9093
+    deploy:
+      restart_policy:
+        condition: on-failure
+        max_attempts: 5
+
+  rezervacije:
+    image: docker-rezervacije
+    container_name: rezervacije
+    build:
+      context: ./rezervacije
+    networks:
+      - instructionnetwork
+    environment:
+      - JAVA_OPTS=
+        - EUREKA_SERVER=http://eureka:8761/eureka
+      - CONFIG_SERVER_URI=optional:serverconfig:http://serverconfig:8888
+    depends_on:
+      - eureka
+      - korisnik
+      - systemevents
+      - termini
+      - rabbitmq
+    ports:
+      - 8084:8084
+      - 9094:9094
+    deploy:
+      restart_policy:
+        condition: on-failure
+        max_attempts: 5
+
+  zuulproxy:
+    image: docker-zuulproxy
+    container_name: zuulproxy
+    build:
+      context: ./zuul-proxy
+    networks:
+      - instructionnetwork
+    ports:
+      - 8662:8662
+    links:
+      - korisnik
+      - raspored
+      - rezervacije
+      - termini
+    deploy:
+      restart_policy:
+        condition: on-failure
+        max_attempts: 5
+
+  frontend:
+    image: docker-frontend
+    container_name: frontend
+    build:
+      context: ./frontend
+    networks:
+      - instructionnetwork
+    ports:
+      - 3000:3000
+    environment:
+      - REACT_APP_HOST_URL=http://zuulproxy:8662
+    depends_on:
+      - eureka
+      - korisnik
+      - zuulproxy
+    deploy:
+      restart_policy:
+        condition: on-failure
+        max_attempts: 5
+
+networks:
+  instructionnetwork:
+    driver: bridge
