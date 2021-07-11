@@ -1,0 +1,10 @@
+server:
+  port: 8082
+spring:
+  application:
+    name: raspored
+  config:
+    import: optional:configserver:https://instruction-network-server-cfg.herokuapp.com
+  cloud:
+    config:
+      uri: https://instruction-network-server-cfg.herokuapp.com

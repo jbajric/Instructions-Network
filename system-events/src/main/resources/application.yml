@@ -1,0 +1,11 @@
+grpc:
+  port: 9090
+  enable-reflection: true
+spring:
+  application:
+    name: sysevents
+  config:
+    import: optional:configserver:https://instruction-network-server-cfg.herokuapp.com/
+  cloud:
+    config:
+      uri: https://instruction-network-server-cfg.herokuapp.com/

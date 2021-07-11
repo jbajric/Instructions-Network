@@ -1,0 +1,41 @@
+#NaslovApp {
+    font-size: 40px;
+    color:  #F7882F;
+    margin-top: 1%;
+    margin-left: 8%;
+    text-align: left;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font: large;
+}
+
+#bodyMain {
+    margin-top: 3%;
+    margin-left: 3%;
+    margin-right: 3%;
+}
+
+#welcomeText h2{
+    float: left;
+    margin-top: 5%;
+}
+
+.demo-card-wide.mdl-card {
+    width: 512px;
+}
+.demo-card-wide > .mdl-card__title {
+    color: #fff;
+    height: 176px;
+    background: url('https://getmdl.io/assets/demos/welcome_card.jpg') center / cover;
+}
+.demo-card-wide > .mdl-card__menu {
+    color: #fff;
+}
+
+body {
+    background: #fafafa;
+    position: relative;
+}
+
+hr {
+    color: lightcyan;
+}

@@ -1,0 +1,15 @@
+#content .card {
+    width: 80%;
+    height: 60%;
+    border-radius: 25px;
+    margin-bottom: 3%;
+}
+
+#searchDiv {
+    width: 30%;
+    margin-bottom: 40px;
+}
+
+.divRating .ant-rate {
+    margin-left: -15%;
+}

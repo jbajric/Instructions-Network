@@ -1,0 +1,10 @@
+server:
+  port: 8084
+spring:
+  application:
+    name: rezervacije
+  config:
+    import: optional:configserver:https://instruction-network-server-cfg.herokuapp.com
+  cloud:
+    config:
+      uri: https://instruction-network-server-cfg.herokuapp.com

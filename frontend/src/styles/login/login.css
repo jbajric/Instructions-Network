@@ -1,0 +1,25 @@
+body {
+    background-image: linear-gradient(147deg, #F7882F 0%, #6B7A8F 60%);
+}
+
+#scena {
+    position: relative;
+}
+
+#okvir {
+    position: absolute;
+    background-image: linear-gradient(147deg, #F7882F 0%, #6B7A8F 60%);
+    top: 0; left: 0; right: 0; bottom: 0;
+}
+
+#loginforma {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+
+#loginforma h2, h5 {
+    color: aliceblue;
+}

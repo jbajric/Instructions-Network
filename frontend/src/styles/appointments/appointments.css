@@ -1,0 +1,31 @@
+h2, h3, h5 {
+    color : royalblue;
+}
+
+.ant-tooltip-inner {
+    display: block;
+}
+
+#componentContent {
+    margin-bottom: 5%;
+}
+
+#componentContent .card {
+    height: 60%;
+    border-radius: 25px;
+    margin-bottom: 3%;
+}
+
+.divIcon{
+    margin-left: 10px;
+    text-align: left;
+}
+.plusIcon{
+    font-size: 300%;
+    padding-bottom: 30px;
+    margin-left: 0px;
+}
+.plusIcon:hover{
+    font-size: 350%;
+    color: midnightblue;
+}

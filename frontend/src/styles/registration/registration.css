@@ -1,0 +1,27 @@
+#scena {
+    position: relative;
+}
+
+#ant-form-item-label {
+    color: antiquewhite;
+}
+
+#registrationforma {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Back icon in registration form*/
+.anticon-left-square svg {
+    width: 2em;
+    height: 2em;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+
+}
+#registrationforma h2, h5 {
+    color: aliceblue;
+}

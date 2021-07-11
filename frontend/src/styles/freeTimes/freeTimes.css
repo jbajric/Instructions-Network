@@ -1,0 +1,38 @@
+#freeTimesTable {
+    width: 50%;
+    height: 80%;
+    position: absolute;
+}
+
+#karticaFormeFreeTimes h5 {
+    color: royalblue;
+}
+
+#sadrzaj #freeTimesTableName h2 {
+    color: royalblue;
+}
+
+.table thead th {
+    vertical-align: top;
+}
+
+#sadrzaj #freeTimesTableName .card .card-body{
+    height: 60px;
+}
+
+#freeTimesTableNamediv h2 {
+    color: royalblue;
+}
+
+#pageDropDown ul{
+    display: block;
+}
+
+.dropdown-menu {
+    display: none;
+}
+
+.dropdown {
+    display:block;
+    float: left;
+}

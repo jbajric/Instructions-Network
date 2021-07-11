@@ -1,0 +1,10 @@
+server:
+  port: 8083
+spring:
+  application:
+    name: termini
+  config:
+    import: optional:configserver:https://instruction-network-server-cfg.herokuapp.com
+  cloud:
+    config:
+      uri: https://instruction-network-server-cfg.herokuapp.com

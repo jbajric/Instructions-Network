@@ -1,0 +1,13 @@
+#slikaaboutus {
+    border: none !important;
+    filter: brightness(1.01);
+}
+
+#aboutus p {
+    filter: contrast(0.8);
+    border: none !important;
+}
+
+#slikeClanova #containerSlika{
+    width: 80%;
+}

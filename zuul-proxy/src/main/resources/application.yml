@@ -1,0 +1,53 @@
+server:
+  port: 8662
+
+spring:
+  application:
+    name: zuul-proxy
+
+grpc:
+  server:
+    port: 9662
+
+app:
+  jwtSecret: JWTSuperSecretKey
+  jwtExpirationInMs: 604800000
+
+zuul:
+  sensitive-headers:
+  host:
+    connect-timeout-millis: 5000000
+    socket-timeout-millis: 5000000
+  ignored-services: '*'
+  routes:
+    korisnik:
+      path: /korisnik/**
+      serviceId: korisnik
+      stripPrefix: true
+      url: http://korisnik:8081
+      #url: http://localhost:8081
+    raspored:
+      path: /raspored/**
+      serviceId: raspored
+      stripPrefix: true
+      url: http://raspored:8082
+      #url: http://localhost:8082
+    termini:
+      path: /termini/**
+      serviceId: termini
+      stripPrefix: true
+      url: http://termini:8083
+      #url: http://localhost:8083
+    rezervacije:
+      path: /rezervacije/**
+      serviceId: rezervacije
+      stripPrefix: true
+      url: http://rezervacije:8084
+      #url: http://localhost:8084
+
+eureka:
+  enabled: true
+  client:
+    serviceUrl:
+      defaultZone: http://eureka:8761/eureka
+      #defaultZone: http://localhost:8761
